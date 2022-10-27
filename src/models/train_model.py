@@ -1,15 +1,12 @@
-import pickle
-from typing import Dict, Union
-
-import numpy as np
+from typing import Union
 import pandas as pd
-from sklearn.compose import ColumnTransformer
+import pickle
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, f1_score, roc_auc_score
-from sklearn.pipeline import Pipeline
 
 SklearnClassifierModel = Union[RandomForestClassifier, LogisticRegression]
+
 
 # TODO: redo train_params
 def train_model(
@@ -27,15 +24,7 @@ def train_model(
     return model
 
 
-def predict_model(model: Pipeline, features: pd.DataFrame) -> np.ndarray:
-    predicts = model.predict(features)
-    return predicts
-
-
-def evaluate_model(predicts: np.ndarray, target: pd.Series) -> Dict[str, float]:
-
-    return {
-        "accuracy": accuracy_score(target, predicts),
-        "f1_score": f1_score(target, predicts),
-        "roc_auc": roc_auc_score(target, predicts),
-    }
+def save_model(model: object, output: str) -> str:
+    with open(output, "wb") as f:
+        pickle.dump(model, f)
+    return output
