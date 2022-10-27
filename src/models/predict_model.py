@@ -1,4 +1,5 @@
 import numpy as np
+import pickle
 import pandas as pd
 from typing import Dict, Union
 
@@ -29,3 +30,10 @@ def create_inference_pipeline(
     model: SklearnClassifierModel, transformer: ColumnTransformer
 ) -> Pipeline:
     return Pipeline([("feature_part", transformer), ("model_part", model)])
+
+
+def load_model(output: str) -> Pipeline:
+    with open(output, "rb") as f:
+        model = pickle.load(f)
+    return model
+
