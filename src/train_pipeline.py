@@ -3,7 +3,7 @@ import click
 import yaml
 import logging
 import sys
-from enities import TrainingPipelineParams
+from src.enities import TrainingPipelineParams
 from src.data import read_data, split_train_val_data
 from src.features import make_features
 from src.features.build_features import extract_target, build_transformer

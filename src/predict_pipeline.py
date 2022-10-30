@@ -5,7 +5,7 @@ import sys
 import numpy as np
 from src.data import read_data
 from src.models import load_model, predict_model
-from enities import PredictPipelineParams
+from src.enities import PredictPipelineParams
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)

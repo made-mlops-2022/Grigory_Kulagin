@@ -4,7 +4,7 @@ import pickle
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from enities import TrainingParams
+from src.enities import TrainingParams
 
 
 SklearnClassifierModel = Union[RandomForestClassifier, LogisticRegression]

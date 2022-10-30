@@ -2,7 +2,7 @@
 import pandas as pd
 from typing import Tuple
 from sklearn.model_selection import train_test_split
-from enities import SplittingParams
+from src.enities import SplittingParams
 
 
 def read_data(path: str) -> pd.DataFrame:
