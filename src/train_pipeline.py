@@ -1,6 +1,8 @@
 import json
 import click
 import yaml
+import logging
+import sys
 
 from src.data import read_data, split_train_val_data
 
@@ -14,12 +16,23 @@ from src.models import (
     create_inference_pipeline
 )
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+s_handler = logging.StreamHandler(sys.stdout)
+s_format = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+s_handler.setFormatter(s_format)
+logger.addHandler(s_handler)
+
 
 def run_train_pipeline(training_pipeline_params):
+    logger.info(f"start train pipeline with params {training_pipeline_params}")
+    logger.info(f"start data reading")
     data = read_data(training_pipeline_params.input_data_path)
+    logger.info(f"data.shape = {data.shape}")
     train_df, val_df = split_train_val_data(
         data, training_pipeline_params.splitting_params
     )
+    logger.info(f"train size = {train_df.shape[0]}, val size = {val_df.shape[0]}")
 
     val_target = extract_target(val_df, training_pipeline_params.feature_params)
     train_target = extract_target(train_df, training_pipeline_params.feature_params)
@@ -29,10 +42,12 @@ def run_train_pipeline(training_pipeline_params):
     transformer = build_transformer(training_pipeline_params.feature_params)
     transformer.fit(train_df)
     train_features = make_features(transformer, train_df)
-
+    logger.info(f'train features shape is {train_features.shape}')
+    logger.info("start model training")
     model = train_model(
         train_features, train_target, training_pipeline_params.train_params
     )
+    logger.info(f"model  is trained")
 
     inference_pipeline = create_inference_pipeline(model, transformer)
 
@@ -45,13 +60,17 @@ def run_train_pipeline(training_pipeline_params):
         predicts,
         val_target,
     )
+    logger.info(f"model metrics is {metrics}")
 
     with open(training_pipeline_params.metric_path, "w") as metric_file:
         json.dump(metrics, metric_file)
+    logger.info(f'metrics saved to path: {training_pipeline_params.output_model_path}')
 
     path_to_model = save_model(
         inference_pipeline, training_pipeline_params.output_model_path
     )
+    logger.info(f'model saved to path: {training_pipeline_params.output_model_path}')
+
     return path_to_model, metrics
 
 
