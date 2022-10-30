@@ -4,6 +4,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from enities import FeatureParams
 
 
 def process_categorical_features(categorical_df: pd.DataFrame) -> pd.DataFrame:
@@ -40,8 +41,7 @@ def make_features(transformer: ColumnTransformer, df: pd.DataFrame) -> pd.DataFr
     return transformer.transform(df)
 
 
-# TODO: add FeatureParams
-def build_transformer(params) -> ColumnTransformer:
+def build_transformer(params: FeatureParams) -> ColumnTransformer:
     transformer = ColumnTransformer(
         [
             (
@@ -59,6 +59,6 @@ def build_transformer(params) -> ColumnTransformer:
     return transformer
 
 
-# TODO: add FeatureParams
-def extract_target(df: pd.DataFrame, params) -> pd.Series:
+
+def extract_target(df: pd.DataFrame, params: FeatureParams) -> pd.Series:
     return df[params.target_col]

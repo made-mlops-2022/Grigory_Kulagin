@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
-from typing import Tuple, NoReturn
+from typing import Tuple
 from sklearn.model_selection import train_test_split
+from enities import SplittingParams
 
 
 def read_data(path: str) -> pd.DataFrame:
@@ -9,9 +10,8 @@ def read_data(path: str) -> pd.DataFrame:
     return data
 
 
-# TODO: add SplittingParams
 def split_train_val_data(
-    data: pd.DataFrame, params
+    data: pd.DataFrame, params: SplittingParams
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
 
     train_data, val_data = train_test_split(

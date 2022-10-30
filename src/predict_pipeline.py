@@ -5,6 +5,7 @@ import sys
 import numpy as np
 from src.data import read_data
 from src.models import load_model, predict_model
+from enities import PredictPipelineParams
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -14,7 +15,7 @@ s_handler.setFormatter(s_format)
 logger.addHandler(s_handler)
 
 
-def run_predict_pipeline(predict_pipeline_params):
+def run_predict_pipeline(predict_pipeline_params: PredictPipelineParams):
     test_df = read_data(predict_pipeline_params.input_data_path)
     logger.info(f'test df size = {test_df.shape[0]}')
     inference_pipeline = load_model(predict_pipeline_params.model_path)

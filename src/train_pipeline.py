@@ -3,9 +3,8 @@ import click
 import yaml
 import logging
 import sys
-
+from enities import TrainingPipelineParams
 from src.data import read_data, split_train_val_data
-
 from src.features import make_features
 from src.features.build_features import extract_target, build_transformer
 from src.models import (
@@ -24,7 +23,7 @@ s_handler.setFormatter(s_format)
 logger.addHandler(s_handler)
 
 
-def run_train_pipeline(training_pipeline_params):
+def run_train_pipeline(training_pipeline_params: TrainingPipelineParams):
     logger.info(f"start train pipeline with params {training_pipeline_params}")
     logger.info(f"start data reading")
     data = read_data(training_pipeline_params.input_data_path)
