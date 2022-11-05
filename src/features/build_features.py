@@ -4,7 +4,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from src.enities import FeatureParams
+from src.entities import FeatureParams
 
 
 def process_categorical_features(categorical_df: pd.DataFrame) -> pd.DataFrame:

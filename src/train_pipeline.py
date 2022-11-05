@@ -3,7 +3,7 @@ import click
 import yaml
 import logging
 import sys
-from src.enities import TrainingPipelineParams
+from src.entities import TrainingPipelineParams, read_training_pipeline_params
 from src.data import read_data, split_train_val_data
 from src.features import make_features
 from src.features.build_features import extract_target, build_transformer
@@ -74,8 +74,7 @@ def run_train_pipeline(training_pipeline_params: TrainingPipelineParams):
 
 
 def train_pipeline(config_path: str):
-    with open(config_path, "r") as input_stream:
-        training_pipeline_params =  yaml.safe_load(input_stream)
+    training_pipeline_params = read_training_pipeline_params(config_path)
     return run_train_pipeline(training_pipeline_params)
 
 

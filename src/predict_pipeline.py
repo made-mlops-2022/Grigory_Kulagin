@@ -5,7 +5,7 @@ import sys
 import numpy as np
 from src.data import read_data
 from src.models import load_model, predict_model
-from src.enities import PredictPipelineParams
+from src.entities import PredictPipelineParams, read_predict_pipeline_params
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -33,9 +33,8 @@ def run_predict_pipeline(predict_pipeline_params: PredictPipelineParams):
 
 
 def predict_pipeline(config_path: str):
-    with open(config_path, "r") as input_stream:
-        training_pipeline_params = yaml.safe_load(input_stream)
-    return run_predict_pipeline(training_pipeline_params)
+    predict_pipeline_params = read_predict_pipeline_params(config_path)
+    return run_predict_pipeline(predict_pipeline_params)
 
 
 @click.command(name="predict_pipeline")
