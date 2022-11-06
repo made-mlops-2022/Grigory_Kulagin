@@ -16,3 +16,4 @@ python src/predict_pipeline.py configs/config_RF/predict_config.yaml
 Test:
 ~~~
 pytest tests/
+~~~
