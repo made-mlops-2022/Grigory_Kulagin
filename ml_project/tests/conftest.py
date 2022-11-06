@@ -56,7 +56,7 @@ def create_fake_data(n_rows) -> pd.DataFrame:
         "slope": [faker.pyint(min_value=0, max_value=2) for _ in range(n_rows)],
         "ca": [faker.pyint(min_value=0, max_value=3) for _ in range(n_rows)],
         "thal": [faker.pyint(min_value=0, max_value=2) for _ in range(n_rows)],
-        "condition": [faker.pyint(min_value=0, max_value=1) for _ in range(n_rows)]
+        "condition": [faker.pyint(min_value=0, max_value=1) for _ in range(n_rows)],
     }
     return pd.DataFrame(data)
 
@@ -68,21 +68,19 @@ def fake_data():
 
 @pytest.fixture()
 def fake_data_path():
-    data_path = 'tests/fake_data.csv'
+    data_path = "tests/fake_data.csv"
     create_fake_data(300).to_csv(data_path, index=False)
     return data_path
 
 
 @pytest.fixture()
 def feature_params(
-        categorical_features: List[str],
-        numerical_features: List[str],
-        target_col: str
+    categorical_features: List[str], numerical_features: List[str], target_col: str
 ) -> FeatureParams:
     feature_params = FeatureParams(
         categorical_features=categorical_features,
         numerical_features=numerical_features,
-        target_col=target_col
+        target_col=target_col,
     )
     return feature_params
 
@@ -93,24 +91,20 @@ def training_params_rf() -> TrainingParams:
         model_type="RandomForestClassifier",
         n_estimators=100,
         max_depth=10,
-        random_state=42
+        random_state=42,
     )
     return params
 
 
 @pytest.fixture()
 def training_params_log_reg() -> TrainingParams:
-    params = TrainingParams(
-        model_type="LogisticRegression",
-        random_state=42
-    )
+    params = TrainingParams(model_type="LogisticRegression", random_state=42)
     return params
 
 
 @pytest.fixture()
 def transformed_dataframe(
-        fake_data: pd.DataFrame,
-        feature_params: FeatureParams
+    fake_data: pd.DataFrame, feature_params: FeatureParams
 ) -> Tuple[pd.Series, pd.DataFrame]:
     target = extract_target(fake_data, feature_params)
     df = fake_data.drop(feature_params.target_col, 1)

@@ -18,14 +18,11 @@ logger.addHandler(s_handler)
 
 def run_predict_pipeline(predict_pipeline_params: PredictPipelineParams):
     test_df = read_data(predict_pipeline_params.input_data_path)
-    logger.info(f'test df size = {test_df.shape[0]}')
+    logger.info(f"test df size = {test_df.shape[0]}")
     inference_pipeline = load_model(predict_pipeline_params.model_path)
     logger.info(f"model loaded from {predict_pipeline_params.model_path}")
 
-    predicts = predict_model(
-        inference_pipeline,
-        test_df,
-    )
+    predicts = predict_model(inference_pipeline, test_df,)
 
     np.save(predict_pipeline_params.output_predicts_path, predicts)
     logger.info(f"predicts saved to {predict_pipeline_params.output_predicts_path}")

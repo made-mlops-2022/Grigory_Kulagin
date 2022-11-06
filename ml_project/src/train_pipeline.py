@@ -13,7 +13,7 @@ from src.models import (
     save_model,
     predict_model,
     evaluate_model,
-    create_inference_pipeline
+    create_inference_pipeline,
 )
 
 logger = logging.getLogger(__name__)
@@ -42,7 +42,7 @@ def run_train_pipeline(training_pipeline_params: TrainingPipelineParams):
     transformer = build_transformer(training_pipeline_params.feature_params)
     transformer.fit(train_df)
     train_features = make_features(transformer, train_df)
-    logger.info(f'train features shape is {train_features.shape}')
+    logger.info(f"train features shape is {train_features.shape}")
     logger.info("start model training")
     model = train_model(
         train_features, train_target, training_pipeline_params.train_params
@@ -51,25 +51,19 @@ def run_train_pipeline(training_pipeline_params: TrainingPipelineParams):
 
     inference_pipeline = create_inference_pipeline(model, transformer)
 
-    predicts = predict_model(
-        inference_pipeline,
-        val_df,
-    )
+    predicts = predict_model(inference_pipeline, val_df,)
 
-    metrics = evaluate_model(
-        predicts,
-        val_target,
-    )
+    metrics = evaluate_model(predicts, val_target,)
     logger.info(f"model metrics is {metrics}")
 
     with open(training_pipeline_params.metric_path, "w") as metric_file:
         json.dump(metrics, metric_file)
-    logger.info(f'metrics saved to path: {training_pipeline_params.output_model_path}')
+    logger.info(f"metrics saved to path: {training_pipeline_params.output_model_path}")
 
     path_to_model = save_model(
         inference_pipeline, training_pipeline_params.output_model_path
     )
-    logger.info(f'model saved to path: {training_pipeline_params.output_model_path}')
+    logger.info(f"model saved to path: {training_pipeline_params.output_model_path}")
 
     return path_to_model, metrics
 

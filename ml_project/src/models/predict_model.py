@@ -26,7 +26,7 @@ def evaluate_model(predicts: np.ndarray, target: pd.Series) -> Dict[str, float]:
 
 
 def create_inference_pipeline(
-        model: SklearnClassifierModel, transformer: ColumnTransformer
+    model: SklearnClassifierModel, transformer: ColumnTransformer
 ) -> Pipeline:
     return Pipeline([("feature_part", transformer), ("model_part", model)])
 

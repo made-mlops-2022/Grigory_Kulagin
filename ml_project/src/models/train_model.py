@@ -11,7 +11,7 @@ SklearnClassifierModel = Union[RandomForestClassifier, LogisticRegression]
 
 
 def train_model(
-        features: pd.DataFrame, target: pd.Series, train_params: TrainingParams
+    features: pd.DataFrame, target: pd.Series, train_params: TrainingParams
 ) -> SklearnClassifierModel:
     if train_params.model_type == "RandomForestClassifier":
         model = RandomForestClassifier(

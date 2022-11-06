@@ -10,24 +10,26 @@ from src.models import train_model
 from src.train_pipeline import run_train_pipeline
 
 
-def test_train_rf_model(transformed_dataframe: Union[pd.DataFrame, pd.Series], training_params_rf: TrainingParams):
+def test_train_rf_model(
+    transformed_dataframe: Union[pd.DataFrame, pd.Series],
+    training_params_rf: TrainingParams,
+):
     features, target = transformed_dataframe
     model = train_model(features, target, training_params_rf)
     assert isinstance(model, RandomForestClassifier)
 
 
-def test_train_log_reg_model(transformed_dataframe: Union[pd.DataFrame, pd.Series],
-                             training_params_log_reg: TrainingParams):
+def test_train_log_reg_model(
+    transformed_dataframe: Union[pd.DataFrame, pd.Series],
+    training_params_log_reg: TrainingParams,
+):
     features, target = transformed_dataframe
     model = train_model(features, target, training_params_log_reg)
     assert isinstance(model, LogisticRegression)
 
 
 def test_train_pipeline(
-        fake_data_path,
-        training_params_rf,
-        feature_params,
-        tmpdir,
+    fake_data_path, training_params_rf, feature_params, tmpdir,
 ):
     expected_output_model_path = tmpdir.join("model.pkl")
     expected_metric_path = tmpdir.join("metrics.json")
@@ -37,7 +39,7 @@ def test_train_pipeline(
         metric_path=expected_metric_path,
         splitting_params=SplittingParams(val_size=0.2, random_state=42),
         feature_params=feature_params,
-        train_params=training_params_rf
+        train_params=training_params_rf,
     )
     model_path, metrics = run_train_pipeline(train_pipeline_params)
     assert metrics["f1_score"] > 0
