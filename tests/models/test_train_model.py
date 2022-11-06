@@ -5,8 +5,8 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
-from src.models import train_model
 from src.entities import TrainingParams, TrainingPipelineParams, SplittingParams
+from src.models import train_model
 from src.train_pipeline import run_train_pipeline
 
 
@@ -16,10 +16,12 @@ def test_train_rf_model(transformed_dataframe: Union[pd.DataFrame, pd.Series], t
     assert isinstance(model, RandomForestClassifier)
 
 
-def test_train_log_reg_model(transformed_dataframe: Union[pd.DataFrame, pd.Series], training_params_log_reg: TrainingParams):
+def test_train_log_reg_model(transformed_dataframe: Union[pd.DataFrame, pd.Series],
+                             training_params_log_reg: TrainingParams):
     features, target = transformed_dataframe
     model = train_model(features, target, training_params_log_reg)
     assert isinstance(model, LogisticRegression)
+
 
 def test_train_pipeline(
         fake_data_path,
@@ -41,4 +43,3 @@ def test_train_pipeline(
     assert metrics["f1_score"] > 0
     assert os.path.exists(model_path)
     assert os.path.exists(train_pipeline_params.metric_path)
-

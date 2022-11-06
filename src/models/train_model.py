@@ -1,17 +1,17 @@
-from typing import Union
-import pandas as pd
 import pickle
+from typing import Union
 
+import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from src.entities import TrainingParams
 
+from src.entities import TrainingParams
 
 SklearnClassifierModel = Union[RandomForestClassifier, LogisticRegression]
 
 
 def train_model(
-    features: pd.DataFrame, target: pd.Series, train_params: TrainingParams
+        features: pd.DataFrame, target: pd.Series, train_params: TrainingParams
 ) -> SklearnClassifierModel:
     if train_params.model_type == "RandomForestClassifier":
         model = RandomForestClassifier(

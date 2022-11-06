@@ -4,6 +4,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
 from src.entities import FeatureParams
 
 
@@ -57,7 +58,6 @@ def build_transformer(params: FeatureParams) -> ColumnTransformer:
         ]
     )
     return transformer
-
 
 
 def extract_target(df: pd.DataFrame, params: FeatureParams) -> pd.Series:

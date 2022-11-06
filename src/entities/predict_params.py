@@ -1,6 +1,8 @@
-import yaml
 from dataclasses import dataclass
+
+import yaml
 from marshmallow_dataclass import class_schema
+
 
 @dataclass()
 class PredictPipelineParams:
@@ -8,7 +10,9 @@ class PredictPipelineParams:
     model_path: str
     output_predicts_path: str
 
+
 PredictPipelineParamsSchema = class_schema(PredictPipelineParams)
+
 
 def read_predict_pipeline_params(path: str) -> PredictPipelineParams:
     with open(path, "r") as input_stream:

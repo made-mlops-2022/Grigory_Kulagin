@@ -11,4 +11,3 @@ setup(
     author='Grigory Kulagin',
     license='MIT',
 )
-

@@ -1,11 +1,12 @@
-import yaml
-import click
 import logging
 import sys
+
+import click
 import numpy as np
+
 from src.data import read_data
-from src.models import load_model, predict_model
 from src.entities import PredictPipelineParams, read_predict_pipeline_params
+from src.models import load_model, predict_model
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -45,4 +46,3 @@ def predict_pipeline_command(config_path: str):
 
 if __name__ == "__main__":
     predict_pipeline_command()
-

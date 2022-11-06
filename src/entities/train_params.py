@@ -1,7 +1,10 @@
-import yaml
 from dataclasses import dataclass, field
-from .feature_preparation_params import SplittingParams, FeatureParams
+
+import yaml
 from marshmallow_dataclass import class_schema
+
+from .feature_preparation_params import SplittingParams, FeatureParams
+
 
 @dataclass()
 class TrainingParams:
@@ -19,6 +22,7 @@ class TrainingPipelineParams:
     splitting_params: SplittingParams
     feature_params: FeatureParams
     train_params: TrainingParams
+
 
 TrainingPipelineParamsSchema = class_schema(TrainingPipelineParams)
 

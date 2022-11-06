@@ -1,8 +1,8 @@
 from typing import Tuple, List
 
+import pandas as pd
 import pytest
 from faker import Faker
-import pandas as pd
 
 from src.entities import FeatureParams, TrainingParams
 from src.features.build_features import extract_target, build_transformer, make_features
@@ -37,6 +37,7 @@ def categorical_features():
         "thal",
     ]
 
+
 def create_fake_data(n_rows) -> pd.DataFrame:
     Faker.seed(42)
     faker = Faker()
@@ -59,9 +60,11 @@ def create_fake_data(n_rows) -> pd.DataFrame:
     }
     return pd.DataFrame(data)
 
+
 @pytest.fixture()
 def fake_data():
     return create_fake_data(300)
+
 
 @pytest.fixture()
 def fake_data_path():
@@ -109,7 +112,6 @@ def transformed_dataframe(
         fake_data: pd.DataFrame,
         feature_params: FeatureParams
 ) -> Tuple[pd.Series, pd.DataFrame]:
-
     target = extract_target(fake_data, feature_params)
     df = fake_data.drop(feature_params.target_col, 1)
     transformer = build_transformer(feature_params)

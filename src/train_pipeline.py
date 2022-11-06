@@ -1,10 +1,11 @@
 import json
-import click
-import yaml
 import logging
 import sys
-from src.entities import TrainingPipelineParams, read_training_pipeline_params
+
+import click
+
 from src.data import read_data, split_train_val_data
+from src.entities import TrainingPipelineParams, read_training_pipeline_params
 from src.features import make_features
 from src.features.build_features import extract_target, build_transformer
 from src.models import (
