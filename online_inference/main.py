@@ -5,9 +5,9 @@ import pandas as pd
 from fastapi import FastAPI
 from fastapi_health import health
 
+from data_scheme import InputData
 
 app = FastAPI()
-
 model = None
 
 
@@ -24,7 +24,7 @@ def load_model():
         model = pickle.load(f)
 
 @app.post('/predict')
-async def predict(data):
+def predict(data: InputData):
     data_df = pd.DataFrame([data.dict()])
     y = model.predict(data_df)
     condition = 'healthy' if not y[0] else 'sick'

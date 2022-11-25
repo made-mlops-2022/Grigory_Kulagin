@@ -1,7 +1,7 @@
 FROM python:3.9.13-slim-buster
 RUN python -m pip install --upgrade pip
 
-COPY models/RF_model.pkl main.py requirements.txt ./
+COPY models/RF_model.pkl main.py requirements.txt data_scheme.py ./
 
 WORKDIR .
 
