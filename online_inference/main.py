@@ -2,8 +2,8 @@ import os
 import pickle
 
 import pandas as pd
-import uvicorn as uvicorn
 from fastapi import FastAPI
+from fastapi_health import health
 
 
 app = FastAPI()
@@ -23,6 +23,31 @@ def load_model():
         global model
         model = pickle.load(f)
 
+@app.post('/predict')
+async def predict(data):
+    data_df = pd.DataFrame([data.dict()])
+    y = model.predict(data_df)
+    condition = 'healthy' if not y[0] else 'sick'
+    return {'condition': condition}
 
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=os.getenv("PORT", 8000))
+
+def check_is_ready():
+    return model is not None
+
+
+async def success_handler(**kwargs):
+    return 'Model is ready'
+
+
+async def failure_handler(**kwargs):
+    return 'Model is not ready'
+
+
+app.add_api_route("/health",
+                  health([check_is_ready],
+                         success_handler=success_handler,
+                         failure_handler=failure_handler,
+                         success_status=200,
+                         failure_status=503
+                         )
+                  )
