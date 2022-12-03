@@ -75,6 +75,18 @@ services:
     image: airflow-ml-base
     restart: "no"
 
+  generate_data:
+    build:
+      context: images/airflow-data-generation
+    image: airflow-data-generation
+    restart: "no"
+
+  prepare_data:
+    build:
+      context: images/airflow-data-preparation
+    image: airflow-data-preparation
+    restart: "no"
+
 volumes:
   logs:
 

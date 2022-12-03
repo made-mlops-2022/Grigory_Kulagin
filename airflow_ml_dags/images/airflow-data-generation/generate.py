@@ -9,7 +9,7 @@ TARGET_DF_NAME = "target.csv"
 
 @click.command("download")
 @click.argument("output_dir")
-def download(output_dir: str):
+def generate(output_dir: str):
     df = pd.read_csv("heart_cleveland_upload.csv")
     sample_df = df.sample(frac=0.5)
 
@@ -18,9 +18,9 @@ def download(output_dir: str):
 
     os.makedirs(output_dir, exist_ok=True)
 
-    X.to_csv(os.path.join(output_dir, TRAIN_DF_NAME))
-    y.to_csv(os.path.join(output_dir, TARGET_DF_NAME))
+    X.to_csv(os.path.join(output_dir, TRAIN_DF_NAME), index=False)
+    y.to_csv(os.path.join(output_dir, TARGET_DF_NAME), index=False)
 
 
 if __name__ == '__main__':
-    download()
+    generate()
